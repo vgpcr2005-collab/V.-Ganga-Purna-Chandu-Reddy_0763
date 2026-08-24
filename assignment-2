@@ -1,0 +1,49 @@
+def maxRegion(grid):
+    n = len(grid)
+    m = len(grid[0])
+
+    visited = [[False] * m for _ in range(n)]
+
+    # 8 possible directions: horizontal, vertical, diagonal
+    directions = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1),           (0, 1),
+        (1, -1),  (1, 0),  (1, 1)
+    ]
+
+    def dfs(r, c):
+        if r < 0 or r >= n or c < 0 or c >= m:
+            return 0
+
+        if grid[r][c] == 0 or visited[r][c]:
+            return 0
+
+        visited[r][c] = True
+        count = 1
+
+        for dr, dc in directions:
+            count += dfs(r + dr, c + dc)
+
+        return count
+
+    largest = 0
+
+    for i in range(n):
+        for j in range(m):
+            if grid[i][j] == 1 and not visited[i][j]:
+                largest = max(largest, dfs(i, j))
+
+    return largest
+
+
+# Input
+n = int(input())
+m = int(input())
+
+grid = []
+
+for _ in range(n):
+    grid.append(list(map(int, input().split())))
+
+# Output
+print(maxRegion(grid))
