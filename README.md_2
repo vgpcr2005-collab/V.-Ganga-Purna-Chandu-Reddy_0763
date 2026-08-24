@@ -1,0 +1,127 @@
+# Connected Cells in a Grid – HackerRank
+
+## 📌 Problem Description
+
+The **Connected Cells in a Grid** problem asks us to find the size of the **largest region of connected cells containing `1`s** in a grid.
+
+Two cells are considered connected if they share an edge **or a corner**. Therefore, all **8 directions** are considered:
+
+* Up
+* Down
+* Left
+* Right
+* Top-left diagonal
+* Top-right diagonal
+* Bottom-left diagonal
+* Bottom-right diagonal
+
+The goal is to return the number of cells in the largest connected region.
+
+## 💡 Approach
+
+This solution uses **Depth-First Search (DFS)** to explore every connected region.
+
+### Steps
+
+1. Create a `visited` matrix to keep track of cells that have already been explored.
+2. Define all 8 possible directions.
+3. Use DFS to explore connected cells containing `1`.
+4. Each time an unvisited `1` is found, start a new DFS.
+5. Count all connected `1`s in that region.
+6. Keep track of the largest region found.
+7. Return the size of the largest region.
+
+## 🔍 DFS Logic
+
+The DFS function checks:
+
+* Whether the cell is inside the grid.
+* Whether the cell contains `1`.
+* Whether the cell has already been visited.
+
+If the cell is valid, it is marked as visited and DFS continues in all 8 directions.
+
+```python
+count = 1
+
+for dr, dc in directions:
+    count += dfs(r + dr, c + dc)
+```
+
+This allows the algorithm to find cells connected horizontally, vertically, and diagonally.
+
+## 🧮 Example
+
+### Input
+
+```text
+4
+4
+1 1 0 0
+0 1 1 0
+0 0 1 0
+1 0 0 0
+```
+
+The largest connected region contains:
+
+```text
+5 cells
+```
+
+### Output
+
+```text
+5
+```
+
+## ⏱️ Complexity
+
+* **Time Complexity:** `O(n × m)`
+* **Space Complexity:** `O(n × m)`
+
+Where:
+
+* `n` = number of rows
+* `m` = number of columns
+
+Each cell is visited at most once.
+
+## 🛠️ Technologies Used
+
+* Python 3
+* Depth-First Search (DFS)
+* Recursion
+* Matrix/Grid Traversal
+
+## ▶️ Input Format
+
+```text
+n
+m
+grid row 1
+grid row 2
+...
+grid row n
+```
+
+Where:
+
+* `n` is the number of rows.
+* `m` is the number of columns.
+* The grid contains `0`s and `1`s.
+
+## 📂 Files
+
+```text
+Connected-Cells-in-a-Grid/
+│
+├── max_region.py
+└── README.md
+```
+
+## 🎯 Key Learning
+
+This problem demonstrates how **DFS and grid traversal** can be used to find connected components in a matrix.
+
+A key concept is that connectivity includes **8 directions**, not just the four horizontal and vertical directions.
