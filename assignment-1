@@ -1,0 +1,54 @@
+def journeyToMoon(n, astronaut):
+    parent = list(range(n))
+    size = [1] * n
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        a = find(a)
+        b = find(b)
+
+        if a == b:
+            return
+
+        if size[a] < size[b]:
+            a, b = b, a
+
+        parent[b] = a
+        size[a] += size[b]
+
+    # Join astronauts from the same country
+    for a, b in astronaut:
+        union(a, b)
+
+    # Find size of each country
+    countries = {}
+
+    for i in range(n):
+        root = find(i)
+        countries[root] = countries.get(root, 0) + 1
+
+    # Count pairs from different countries
+    answer = 0
+    previous = 0
+
+    for count in countries.values():
+        answer += previous * count
+        previous += count
+
+    return answer
+
+
+# Input
+n, p = map(int, input().split())
+
+astronaut = []
+for _ in range(p):
+    a, b = map(int, input().split())
+    astronaut.append([a, b])
+
+print(journeyToMoon(n, astronaut))
